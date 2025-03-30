@@ -1,37 +1,12 @@
-import { allWritings } from '.contentlayer/generated';
-import { cn } from '@/lib/className';
-import DateViewer from '@/ui/DateView';
 import ExternalLink from '@/ui/ExternalLink';
-import { pick } from 'contentlayer/client';
 import Image from 'next/image';
-import Link from 'next/link';
-import { Suspense } from 'react';
-
-async function getData() {
-  const posts = allWritings
-    .map((post) => pick(post, ['slug', 'title', 'summary', 'publishedAt']))
-    .sort(
-      (a, b) =>
-        Number(new Date(b.publishedAt)) - Number(new Date(a.publishedAt)),
-    )
-    .slice(0, 3);
-
-  return {
-    props: {
-      posts,
-    },
-  };
-}
 
 export default function Home() {
   return (
-    <div className="mx-auto flex max-w-2xl flex-col gap-16 px-8">
+    <div className="flex flex-col gap-10">
       <Header />
       <Contact />
       <AboutMe />
-      <Suspense>
-        <RecentWritings />
-      </Suspense>
     </div>
   );
 }
@@ -39,21 +14,20 @@ export default function Home() {
 function Header() {
   return (
     <div className="flex flex-row items-center gap-4">
-      <div className="relative h-12 w-12">
+      <div className="relative h-12 w-12 overflow-hidden rounded-full">
         <Image
           alt="Logo"
-          className="rounded-full"
-          layout="fill"
-          objectFit="contain"
-          src="/static/images/logo.png"
+          className="h-full w-full object-cover scale-[2.5] object-bottom"
+          fill
+          src="/static/images/Me.jpg"
         />
         <div className="absolute -bottom-2 -right-2 rounded-full bg-white px-1 py-0.5 text-sm dark:bg-gray-900">
           ✨
         </div>
       </div>
       <div className="flex flex-col">
-        <h1>Cristian Crețu</h1>
-        <p className="text-quaternary">Design Engineer</p>
+        <h1>Kailash B</h1>
+        <p className="text-quaternary">Digital software designer</p>
       </div>
     </div>
   );
@@ -65,34 +39,16 @@ function AboutMe() {
       <p className="text-tertiary">About me</p>
       <div className="text-secondary flex flex-col gap-4">
         <p>
-          I&apos;m obsessed with creating digital interfaces that just{' '}
-          <i>work</i> - where design and code come together seamlessly.
-          You&apos;ll often find me tinkering with prototypes or exploring apps
-          that have that special charm.
+        Curious by nature, precise by practice.
+        I turn complex problems into seamless, thoughtful experiences.
+        Currently leading design at{' '}
+        <ExternalLink arrow={false} href="https://inferless.com">
+          Inferless
+        </ExternalLink>
+        .
         </p>
-        <p>
-          Playing with prototypes, exploring charmful apps, now at{' '}
-          <ExternalLink arrow={false} href="https://deta.space">
-            Deta
-          </ExternalLink>{' '}
-          reimagining what an operating system can be for the web. Formerly at{' '}
-          <ExternalLink arrow={false} href="https://github.com/Landmarks-Tech">
-            Landmarks
-          </ExternalLink>{' '}
-          , crafting web applications that aimed to be both beautiful and
-          functional.
-        </p>
-        <p>
-          Currently studying Computer Science at BBU. I&apos;m a firm believer
-          in always learning, whether it&apos;s through reading, writing, or
-          diving into new projects.
-        </p>
-        <p>
-          Check out my{' '}
-          <Link className="underline" href={'/work'}>
-            highlights and projects
-          </Link>{' '}
-          if you want to learn more about me.
+        <p className="mb-8">
+        Previously at Razorpay, Unacademy, Stable Money, and Freo.
         </p>
       </div>
     </div>
@@ -111,11 +67,11 @@ function ContactLink({
   website?: string;
 }) {
   return (
-    <span className="block items-center gap-4">
+    <div>
       {website && <p className="text-quaternary">{website}</p>}
       {href && (
         <a
-          className="text-secondary hover:text-primary transition-opacity duration-150"
+          className="text-secondary hover:text-primary transition-opacity duration-150 whitespace-nowrap"
           href={href}
           rel="noopener noreferrer"
           target="_blank"
@@ -138,11 +94,28 @@ function ContactLink({
         </a>
       )}
       {email && (
-        <p className="text-secondary hover:text-primary transition-opacity duration-150">
-          {title}
-        </p>
+        <a
+          className="text-secondary hover:text-primary transition-opacity duration-150 whitespace-nowrap"
+          href={`mailto:${title}`}
+        >
+          {title}{' '}
+          <svg
+            className=" inline-block h-3 w-3"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth={1.5}
+            viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M4.5 19.5l15-15m0 0H8.25m11.25 0v11.25"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+          </svg>
+        </a>
       )}
-    </span>
+    </div>
   );
 }
 
@@ -150,16 +123,16 @@ function Contact() {
   return (
     <div className="flex flex-col gap-4">
       <p className="text-tertiary">Links</p>
-      <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
+      <div className="grid grid-cols-1 gap-4 md:grid-cols-3 md:gap-x-40 md:items-start">
         <ContactLink
-          href="https://X.com/cristicrtu"
-          title="cristicrtu"
-          website="X"
+          href="https://www.linkedin.com/in/iamkailash"
+          title="iamkailashb"
+          website="LinkedIn"
         />
         <ContactLink
-          href="https://github.com/cristicretu"
-          title="cristicretu"
-          website="GitHub"
+           href="https://X.com/iamkailashb"
+           title="iamkailashb"
+           website="X"
         />
         <ContactLink
           href="https://www.figma.com/@cretu"
@@ -167,46 +140,11 @@ function Contact() {
           website="Figma"
         />
         <ContactLink
-          href="https://layers.to/cretu"
-          title="cretu"
-          website="Layers.to"
-        />
-        <ContactLink
-          email="hi[at]cretu(dot)dev"
-          title="hi[at]cretu(dot)dev"
-          website="Email"
+          email="kailash2work[at]gmail(dot)com"
+          title="kailash2work@gmail.com"
+          website="Email" 
         />
         <ContactLink href="https://read.cv/cretu" title="cretu" website="CV" />
-      </div>
-    </div>
-  );
-}
-
-async function RecentWritings() {
-  const { posts } = (await getData()).props;
-
-  return (
-    <div className="flex flex-col gap-4">
-      <p className="text-tertiary">Recent writing</p>
-      <div className="space-y-2">
-        {posts.map((post) => (
-          <Link
-            className={cn(
-              '-mx-2 flex flex-row justify-between rounded-md px-2 py-2',
-              'hover:bg-gray-200 dark:hover:bg-gray-800',
-              'transition-all duration-200',
-            )}
-            href={`/writing/${post.slug}`}
-            key={post.slug}
-          >
-            <span className="text-secondary mr-2 flex-grow truncate">
-              {post.title}
-            </span>
-            <span className="text-tertiary flex-shrink-0">
-              <DateViewer date={post.publishedAt} />{' '}
-            </span>
-          </Link>
-        ))}
       </div>
     </div>
   );

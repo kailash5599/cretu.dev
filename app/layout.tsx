@@ -3,7 +3,6 @@ import './globals.css';
 import Providers from './providers';
 import { cn } from '@/lib/className';
 import AnimateEnter from '@/ui/AnimateEnter';
-import RollingMenu from '@/ui/RollingMenu';
 import { Metadata } from 'next';
 import type { Viewport } from 'next';
 import { Inter } from 'next/font/google';
@@ -95,12 +94,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html className="h-full" lang="en" suppressHydrationWarning>
       <body
         className={cn(
           `${inter.className}`,
+          'flex flex-col',
           'h-full, min-h-screen, relative w-full',
-          'my-4 bg-white dark:bg-gray-900 sm:my-24',
+          'my-2 bg-white dark:bg-gray-900 sm:my-12',
           'motion-reduce:transform-none motion-reduce:transition-none',
         )}
       >
@@ -129,15 +129,15 @@ export default function RootLayout({
               <PlusIcon className="h-6 w-6 text-white" />
             </button> */}
             {/* <div>hey</div> */}
-            <RollingMenu />
-            {/* <Swatch /> */}
           </nav>
-          <AnimateEnter>
-            <>
-              {children}
-              <Footer />
-            </>
-          </AnimateEnter>
+          <main className="flex flex-col flex-grow w-full mx-auto max-w-2xl px-8">
+            <AnimateEnter>
+              <div className="flex flex-col flex-grow justify-between">
+                {children}
+                <Footer />
+              </div>
+            </AnimateEnter>
+          </main>
         </Providers>
       </body>
     </html>

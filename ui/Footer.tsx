@@ -6,11 +6,10 @@ import { useRef } from 'react';
 
 export default function Footer() {
   return (
-    <footer className="text-quaternary mx-auto max-w-2xl border-t border-dashed border-gray-200 px-8 py-12 pb-24 pt-4 text-sm dark:border-gray-200 dark:text-gray-600">
+    <footer className="text-quaternary border-t border-dashed border-gray-200 pt-24 pb-4 text-sm dark:border-gray-200 dark:text-gray-600">
       <FooterGraphic />
-      <p className="flex flex-col gap-4">
-        © 2021 - {new Date().getFullYear()} Cristian Crețu. All Rights Reserved.
-        <span>www.cretu.dev v.2024.06</span>
+      <p className="mt-8 flex flex-col gap-4">
+        © 2025 - Kailash B. All Rights Reserved.
         <span>
           Website built using Next.js & TailwindCSS (
           <a
